@@ -23,8 +23,8 @@ namespace :page do
   task build_front_pages: :environment do
     user = User.super_admin
     pages_params = [
-      { title: 'Forside', menu_title: 'SAMSØ', menu_id: 'Ingen', locale: 'da', layout: 'alabama', active: true, user_id: user.id },
-      { title: 'Front page', menu_title: 'SAMSØ', menu_id: 'None', locale: 'en', layout: 'alabama', active: true, user_id: user.id }
+      { title: 'Forside', menu_title: 'Maria', menu_id: 'Ingen', locale: 'da', layout: 'alabama', active: true, user_id: user.id },
+      { title: 'Front page', menu_title: 'Maria', menu_id: 'None', locale: 'en', layout: 'alabama', active: true, user_id: user.id }
     ]
 
     pages_params.each do |page_params|
