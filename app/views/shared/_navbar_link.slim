@@ -1,0 +1,9 @@
+- if @page.menu_title == link_name
+  li.nav-item.active
+    a.nav-link
+      '&nbsp;
+      = link_name
+      span.sr-only (current)
+- else
+  li.nav-item
+    = link_to link_name, link_url, class: 'nav-link'

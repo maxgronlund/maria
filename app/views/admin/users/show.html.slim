@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @user.name
+p
+  strong Email:
+  = @user.email
+/- image_url =  'https://s3.eu-central-1.amazonaws.com' + @user.avatar.url(:square).gsub('//s3.amazonaws.com', '')
+
+= image_tag( @user.avatar_url(:square))
+
+= link_to t('edit'), edit_admin_user_path(@user)
+'  |
+= link_to t('back'), admin_users_path

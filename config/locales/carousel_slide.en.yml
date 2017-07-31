@@ -1,0 +1,19 @@
+en:
+  activerecord:
+    errors:
+      models:
+        admin/carousel_slide:
+          attributes:
+            title:
+              blank: Missing
+            image:
+              blank: Image missing
+      carousel_slide:
+        title: Title
+
+    models:
+      carousel_slide: Slide
+
+  carousel_slide:
+    new: 'Add slide'
+

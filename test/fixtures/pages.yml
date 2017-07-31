@@ -1,0 +1,64 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+news_page:
+  title: MyString
+  menu_title: MyString
+  menu_id: menu_bar
+  menu_position: 1
+  active: true
+  locale: alabama
+  user: one
+
+front_page:
+  title: MyString
+  menu_title: MyString
+  menu_id: menu_bar
+  menu_position: 1
+  active: true
+  locale: alabama
+  user: one
+
+about_page:
+  title: MyString
+  menu_title: MyString
+  menu_id: menu_bar
+  menu_position: 10
+  active: true
+  locale: alabama
+  user: two
+
+subscription_page:
+  title: MyString
+  menu_title: MyString
+  menu_id: menu_bar
+  menu_position: 10
+  active: true
+  locale: alabama
+  user: one
+
+payment_page:
+  title: MyString
+  menu_title: MyString
+  menu_id: menu_bar
+  menu_position: 10
+  active: true
+  locale: alabama
+  user: one
+
+post_page:
+  title: MyString
+  menu_title: MyString
+  menu_id: menu_bar
+  menu_position: 10
+  active: true
+  locale: alabama
+  user: one
+
+gallery_page:
+  title: MyString
+  menu_title: MyString
+  menu_id: menu_bar
+  menu_position: 10
+  active: true
+  locale: alabama
+  user: one

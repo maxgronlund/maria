@@ -1,0 +1,41 @@
+da:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: 'Password skal være mindst 6 karakterer langt'
+            password_confirmation:
+              confirmation: 'Password og gentagelse af password passet ikke sammen'
+            email:
+              blank: 'Email skal udfyldes'
+              invalid: 'Ugyldig email'
+              taken: 'Email er allerede brugt'
+            password:
+              blank: 'Password skal udfyldes'
+              too_short: 'Password skal være længere'
+            name:
+              blank: 'Navn skal udfyldes'
+
+    models:
+      user: Bruger
+    attributes:
+      user:
+        name: "Navn"
+        email: "email"
+        password: 'Password'
+        password_confirmation: 'Gentag password'
+      role:
+        permission: 'Adgangs rettigheder'
+
+  user:
+    password:
+      hint: 'Udfyldes kun hvis password skal skiftes'
+      send_me_reset_password_instructions: 'Send reset password link'
+    pluralized: Brugere
+    admin: 'Administrator'
+    super_admin: Super administrator
+    member: Bruger
+
+

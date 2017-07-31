@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  maintenance: false
+  da_subscription_page_id: payment_page
+  da_landing_page_id: front_page
+
+

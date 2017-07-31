@@ -1,0 +1,3 @@
+- if @admin_namespace
+  = render 'blog/links', blog_module: blog_module, page: page
+= render 'blog/layouts/' + blog_module.layout, blog_module: blog_module

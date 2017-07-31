@@ -1,0 +1,33 @@
+h3 Listing posts
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th Title
+        th Position
+        th Contentable
+        th colspan="3"
+
+    tbody
+      - @posts.each do |post|
+        tr
+          td = post.title
+          td = post.position
+          td = post.postable.class.name
+          td.float-right-button-container
+            /= link_to t('show'),
+            /  admin_post_path(post),
+            /  class: 'btn btn-primary btn-sm'
+            = link_to t('edit'),
+              edit_admin_post_path(post),
+              class: 'btn btn-secondary btn-sm'
+            / = link_to t('delete'),
+            /   admin_post_path(post),
+            /   data: { confirm: t('are_you_sure') },
+            /   method: :delete,
+            /   class: 'btn btn-danger btn-sm'
+
+br
+
+= link_to 'New Content', new_admin_post_path

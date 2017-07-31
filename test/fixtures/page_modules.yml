@@ -1,0 +1,60 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  page: front_page
+  moduleable: carousel_one
+  moduleable_type: "Admin::CarouselModule"
+  slot_id: 1
+  position: 1
+
+two:
+  page: about_page
+  moduleable: carousel_two
+  moduleable_type: "Admin::CarouselModule"
+  slot_id: 1
+  position: 2
+
+three:
+  page: subscription_page
+  moduleable: subscription_module_one
+  moduleable_type: "Admin::SubscriptionModule"
+  slot_id: 1
+  position: 2
+
+blog_page_module:
+  page: news_page
+  moduleable: blog_module_one
+  moduleable_type: "Admin::BlogModule"
+  slot_id: 1
+  position: 2
+
+blog_post_module:
+  page: news_page
+  moduleable: blog_module_one
+  moduleable_type: "Admin::BlogModule"
+  slot_id: 1
+  position: 2
+
+post_module:
+  page: post_page
+  moduleable: post_module_one
+  moduleable_type: "Admin::PostModule"
+  slot_id: 1
+  position: 2
+
+dmi_module:
+  page: post_page
+  moduleable: dmi_module_one
+  moduleable_type: "Admin::DmiModule"
+  slot_id: 200
+  position: 20
+
+gallery_module:
+  page: gallery_page
+  moduleable: gallery_module_one
+  moduleable_type: "Admin::GalleryModule"
+  slot_id: 200
+  position: 20
+
+
+
