@@ -1,9 +1,9 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  paginates_per 50
+  include PgSearch
+  multisearchable against: %i[name email]
+  pg_search_scope :search_by_name_or_emai, against: %i[name email]
+  has_secure_password
 
   has_many :roles, dependent: :destroy
   has_many :subscriptions, class_name: 'Admin::Subscription', dependent: :destroy
@@ -21,7 +21,11 @@ class User < ApplicationRecord
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\Z}
+  validates :email, uniqueness: true
   validates :email, presence: true
+  validates_confirmation_of :password
+
+  FAKE_EMAIL = '@10ff3690-389e-42ed-84dc-bd40a8d99fa5.example.com'.freeze
 
   def super_admin?
     roles.where(permission: Role::SUPER_ADMIN).any?
@@ -29,6 +33,10 @@ class User < ApplicationRecord
 
   def admin?
     roles.where(permission: Role::ADMIN).any?
+  end
+
+  def administrator?
+    admin? || super_admin?
   end
 
   def editor?
@@ -56,7 +64,7 @@ class User < ApplicationRecord
   def avatar_url(size)
     source = 'https://s3.eu-central-1.amazonaws.com' + avatar.url(size).gsub('//s3.amazonaws.com', '')
     if source == 'https://s3.eu-central-1.amazonaws.com/avatars/square/missing.png'
-      source = 'https://s3.eu-central-1.amazonaws.com/maria-files/users/avatars/missing/#{size.to_s}/missing.png'
+      source = 'https://s3.eu-central-1.amazonaws.com/samso-files/users/avatars/missing/#{size.to_s}/missing.png'
     end
     source
   end
@@ -69,5 +77,23 @@ class User < ApplicationRecord
 
   def self.super_admin
     Role.find_by(permission: Role::SUPER_ADMIN).user
+  end
+
+  def can_manage_resource?(resource)
+    case resource.class.name
+
+    when 'Admin::GalleryImage'
+      return resource.user_id == id
+    end
+
+    false
+  end
+
+  def fake_email?
+    email.include?(FAKE_EMAIL)
+  end
+
+  def sanitized_email
+    fake_email? ? '' : email
   end
 end

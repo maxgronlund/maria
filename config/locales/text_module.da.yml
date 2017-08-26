@@ -21,7 +21,7 @@ da:
       url: Billed / Link / Knap bruger denne url
       url_text: Tekst til knappe og link, vises ikke hvis feltet er tomt
     placeholders:
-      url: http://maria.dk
+      url: http://mariagronlund.com
     show_to:
       all: Altid
       guests:  Kun når man ikke er logget ind

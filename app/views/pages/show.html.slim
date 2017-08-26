@@ -1,12 +1,17 @@
 = render 'shared/navbar', menu: @menu, top_page: @page
-.container.mt-80
-  - if @admin
-    .row
-      .col-sm-12
-        .float-right
-          = link_to t('page.edit'), admin_page_path(@page)
 
-  = render 'pages/show', page: @page
 
-/ .fixed-bottom
-/   h1 fo
+= render 'pages/show', page: @page
+
+
+- if @footer
+  .fixed-bottom
+    .footer
+      .container
+        .row
+          .col-sm-4
+            - unless @footer.about_link.empty?
+              = link_to @footer.about_link_name, @footer.about_link
+          .col-sm-4
+            - unless @footer.terms_of_usage_link.empty?
+              = link_to @footer.terms_of_usage_link_name, @footer.terms_of_usage_link

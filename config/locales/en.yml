@@ -37,8 +37,9 @@ en:
   edit_model: "Editing %{model_name}"
   edit: Edit
   save: Save
+  cancel: Cancel
   delete: Delete
-  site_name: Maria
+  site_name: MARIA
   not_in_any_menus: None
   menu_bar: The menu bar
   da: Danish

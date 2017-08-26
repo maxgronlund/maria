@@ -1,16 +1,20 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: %i[show edit update destroy]
   before_action :set_selected
 
   # GET /users
-  # GET /users.json
   def index
-    @users = User.all
+    @users =
+      if params[:search] && !params[:search].empty?
+        User.search_by_name_or_emai(params[:search]).order(:name).page params[:page]
+      else
+        User.order(:name).page params[:page]
+      end
     @selected = 'users'
+    @user_count = User.count
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /admin/users/1
   def show
   end
 
@@ -20,48 +24,34 @@ class Admin::UsersController < AdminController
     @user.roles.build
   end
 
-  # GET /users/1/edit
+  # GET /admin/users/1/edit
   def edit
   end
 
   # POST /users
-  # POST /users.json
   def create
     @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to admin_users_path, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
 
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to admin_users_path
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH/PUT /admin/users/1
   def update
-    respond_to do |format|
-      if @user.update(updated_params)
-        format.html { redirect_to admin_users_path, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(updated_params)
+      redirect_to admin_users_path
+    else
+      render :edit
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /admin/users/1
   def destroy
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to admin_users_url }
-      format.json { head :no_content }
-    end
+    redirect_to admin_users_url
   end
 
   private
@@ -83,7 +73,8 @@ class Admin::UsersController < AdminController
       :password,
       :avatar,
       :password_confirmation,
-      roles_attributes: [:permission, :id]
+      :search,
+      roles_attributes: %i[permission id]
     )
   end
 

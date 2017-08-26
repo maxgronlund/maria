@@ -1,15 +1,13 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  # GET /users
-  # GET /users.json
-  # def index
-  #   @users = User.all
-  # end
+  before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users/1
-  # GET /users/1.json
   def show
+    if current_user.nil?
+      redirect_to new_session_path
+    elsif @user.nil? || current_user != @user
+      render_404
+    end
   end
 
   # GET /users/new
@@ -19,35 +17,32 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    render_403 if current_user.nil? || current_user != @user
   end
 
   # POST /users
-  # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.reset_password_token = SecureRandom.hex(32)
+    @user.reset_password_sent_at = Time.zone.now
     if @user.save
-      redirect_to @user
+      UserNotifierMailer.send_signup_email(@user.id).deliver
+      redirect_to confirm_signups_path
     else
       render :new
     end
   end
 
   # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      redirect_to @user
+    else
+      render :edit
     end
   end
 
   # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @user.destroy
     respond_to do |format|
@@ -67,7 +62,9 @@ class UsersController < ApplicationController
       params.require(:user).permit(
         :name,
         :email,
-        :avatar
+        :avatar,
+        :password,
+        :password_confirmation
       )
     end
 end

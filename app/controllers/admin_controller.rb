@@ -1,6 +1,6 @@
 # used to restrict access to the admin namespace
 class AdminController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_admin!
   def index
     @selected = 'dashboad'
   end

@@ -1,5 +1,5 @@
 class Admin::PageModulesController < AdminController
-  before_action :set_page_module, only: [:show, :edit, :update, :destroy]
+  before_action :set_page_module, only: %i[show edit update destroy]
   before_action :new_page_with_page_module, only: [:create]
 
   # GET /page_modules/new
@@ -57,6 +57,8 @@ class Admin::PageModulesController < AdminController
       edit_admin_page_dmi_module_path(@page, @page_module.moduleable_id)
     when 'Admin::GalleryModule'
       edit_admin_page_gallery_module_path(@page, @page_module.moduleable_id)
+    when 'Admin::ImageModule'
+      edit_admin_page_image_module_path(@page, @page_module.moduleable_id)
     end
   end
 
@@ -76,6 +78,8 @@ class Admin::PageModulesController < AdminController
       Admin::DmiModule.find(@page_module.moduleable_id).destroy
     when 'Admin::GalleryModule'
       Admin::GalleryModule.find(@page_module.moduleable_id).destroy
+    when 'Admin::ImageModule'
+      Admin::ImageModule.find(@page_module.moduleable_id).destroy
     end
   end
 
@@ -103,6 +107,8 @@ class Admin::PageModulesController < AdminController
       @moduleable = Admin::DmiModule.create
     when 'Admin::GalleryModule'
       @moduleable = Admin::GalleryModule.create
+    when 'Admin::ImageModule'
+      @moduleable = Admin::ImageModule.create
     end
   end
 

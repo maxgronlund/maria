@@ -15,7 +15,7 @@ class Admin::BlogPost < ApplicationRecord
   def image_url(size)
     source = 'https://s3.eu-central-1.amazonaws.com' + image.url(size).gsub('//s3.amazonaws.com', '')
     if source == 'https://s3.eu-central-1.amazonaws.com/avatars/square/missing.png'
-      source = 'https://s3.eu-central-1.amazonaws.com/maria-files/users/avatars/missing/#{size.to_s}/missing.png'
+      source = 'https://s3.eu-central-1.amazonaws.com/samso-files/users/avatars/missing/#{size.to_s}/missing.png'
     end
     source
   end

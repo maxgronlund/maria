@@ -1,5 +1,5 @@
 class Admin::GalleryModulesController < AdminController
-  before_action :set_admin_gallery_module, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin_gallery_module, only: %i[show edit update destroy]
 
   # GET /admin/gallery_modules/1/edit
   def edit
@@ -30,6 +30,7 @@ class Admin::GalleryModulesController < AdminController
     params.require(:admin_gallery_module).permit(
       :name,
       :body,
+      :page_id,
       :layout,
       :position,
       :slot_id

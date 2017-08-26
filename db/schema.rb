@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725201932) do
+ActiveRecord::Schema.define(version: 20170823192230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,8 +63,40 @@ ActiveRecord::Schema.define(version: 20170725201932) do
     t.index ["page_id"], name: "index_admin_carousel_slides_on_page_id"
   end
 
+  create_table "admin_csv_imports", force: :cascade do |t|
+    t.string "name"
+    t.string "import_type"
+    t.text "comments"
+    t.text "summary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "csv_file_file_name"
+    t.string "csv_file_content_type"
+    t.integer "csv_file_file_size"
+    t.datetime "csv_file_updated_at"
+    t.string "string_file_name"
+    t.string "string_content_type"
+    t.integer "string_file_size"
+    t.datetime "string_updated_at"
+  end
+
   create_table "admin_dmi_modules", force: :cascade do |t|
     t.string "forecast_duration", default: "days_two_forecast"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "admin_footers", force: :cascade do |t|
+    t.string "title"
+    t.string "locale"
+    t.string "about_link"
+    t.string "about_link_name"
+    t.string "email"
+    t.string "email_name"
+    t.string "terms_of_usage_link"
+    t.string "terms_of_usage_link_name"
+    t.string "info"
+    t.string "copyright"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -88,6 +120,14 @@ ActiveRecord::Schema.define(version: 20170725201932) do
   create_table "admin_gallery_modules", force: :cascade do |t|
     t.string "name"
     t.text "body"
+    t.string "layout"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "page_id"
+    t.index ["page_id"], name: "index_admin_gallery_modules_on_page_id"
+  end
+
+  create_table "admin_image_modules", force: :cascade do |t|
     t.string "layout"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -134,15 +174,14 @@ ActiveRecord::Schema.define(version: 20170725201932) do
   end
 
   create_table "admin_system_setups", force: :cascade do |t|
-    t.boolean "maintenance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "da_landing_page_id"
-    t.integer "en_landing_page_id"
-    t.integer "da_subscription_page_id"
-    t.integer "en_subscription_page_id"
-    t.integer "da_post_page_id"
-    t.integer "en_post_page_id"
+    t.integer "landing_page_id"
+    t.integer "subscription_page_id"
+    t.integer "post_page_id"
+    t.string "locale"
+    t.string "locale_name"
+    t.string "welcome_page_id"
   end
 
   create_table "page_modules", force: :cascade do |t|
@@ -169,6 +208,26 @@ ActiveRecord::Schema.define(version: 20170725201932) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "require_subscription", default: false
+    t.integer "footer_id"
+    t.string "color_row_1"
+    t.integer "height_row_1"
+    t.string "color_row_2"
+    t.integer "height_row_2"
+    t.string "color_row_3"
+    t.integer "height_row_3"
+    t.string "row_1_background_file_name"
+    t.string "row_1_background_content_type"
+    t.integer "row_1_background_file_size"
+    t.datetime "row_1_background_updated_at"
+    t.string "row_2_background_file_name"
+    t.string "row_2_background_content_type"
+    t.integer "row_2_background_file_size"
+    t.datetime "row_2_background_updated_at"
+    t.string "row_3_background_file_name"
+    t.string "row_3_background_content_type"
+    t.integer "row_3_background_file_size"
+    t.datetime "row_3_background_updated_at"
+    t.index ["footer_id"], name: "index_pages_on_footer_id"
     t.index ["user_id"], name: "index_pages_on_user_id"
   end
 
@@ -186,6 +245,15 @@ ActiveRecord::Schema.define(version: 20170725201932) do
     t.datetime "updated_at", null: false
     t.index ["subscription_id"], name: "index_payments_on_subscription_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -233,7 +301,7 @@ ActiveRecord::Schema.define(version: 20170725201932) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.string "password_digest", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -246,6 +314,7 @@ ActiveRecord::Schema.define(version: 20170725201932) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer "legacy_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
